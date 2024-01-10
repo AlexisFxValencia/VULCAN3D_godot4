@@ -1,0 +1,343 @@
+[gd_scene load_steps=37 format=3 uid="uid://dvripvsdvdvy5"]
+
+[ext_resource type="Texture2D" uid="uid://ctb4nh1lui3m" path="res://textures/photos_2015_09_18_fst_765b3qqmm4v.jpg" id="1"]
+[ext_resource type="Script" path="res://scripts/camera2.gd" id="1_70p5d"]
+[ext_resource type="Script" path="res://scripts/gui_scripts/shutdown_button.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/gui_scripts/Tree.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/gui_scripts/load_scenario_button.gd" id="4"]
+[ext_resource type="Script" path="res://scripts/Neutrons.gd" id="4_sky37"]
+[ext_resource type="Script" path="res://scenes/Area3D_rod.gd" id="4_yyb23"]
+[ext_resource type="Script" path="res://scripts/gui_scripts/reflexions_button.gd" id="5"]
+[ext_resource type="Script" path="res://scripts/gui_scripts/pause_button.gd" id="6"]
+[ext_resource type="Script" path="res://scenes/VBoxContainer.gd" id="6_lb7ja"]
+[ext_resource type="Script" path="res://scripts/gui_scripts/b2g_label.gd" id="7"]
+[ext_resource type="Script" path="res://scenes/rod_HSlider.gd" id="7_y3lt1"]
+[ext_resource type="Script" path="res://scripts/gui_scripts/y_HSlider.gd" id="8"]
+[ext_resource type="Script" path="res://scripts/gui_scripts/z_HSlider.gd" id="9"]
+[ext_resource type="Script" path="res://scripts/gui_scripts/speed_HSlider.gd" id="10"]
+[ext_resource type="Script" path="res://scripts/gui_scripts/x_HSlider.gd" id="11"]
+[ext_resource type="Script" path="res://scripts/gui_scripts/source_button.gd" id="12"]
+[ext_resource type="Script" path="res://scripts/gui_scripts/b2m_label.gd" id="13"]
+[ext_resource type="Script" path="res://scripts/Area.gd" id="15"]
+[ext_resource type="Script" path="res://scripts/gui_scripts/nb_neutrons_label.gd" id="16"]
+[ext_resource type="Script" path="res://scenes/s_HSlider.gd" id="16_e28kx"]
+[ext_resource type="Script" path="res://scenes/c_HSlider.gd" id="17_kuen0"]
+[ext_resource type="Script" path="res://scenes/f_HSlider.gd" id="18_qe3k4"]
+[ext_resource type="Script" path="res://scripts/gui_scripts/reset_button.gd" id="20"]
+
+[sub_resource type="BoxMesh" id="3"]
+size = Vector3(200, 2, 200)
+
+[sub_resource type="Skin" id="Skin_8kp6f"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lnens"]
+albedo_texture = ExtResource("1")
+
+[sub_resource type="BoxMesh" id="1"]
+size = Vector3(4, 4, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tvuau"]
+transparency = 1
+albedo_color = Color(0.054902, 1, 1, 0.266667)
+albedo_texture = ExtResource("1")
+
+[sub_resource type="BoxShape3D" id="5"]
+size = Vector3(4, 4, 4)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_gqe5i"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dk6wc"]
+transparency = 1
+albedo_color = Color(1, 0.0666667, 1, 0.309804)
+albedo_texture = SubResource("CanvasTexture_gqe5i")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_v7ih5"]
+height = 3.0
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5m1s4"]
+ground_bottom_color = Color(0.298039, 0.27451, 0.0784314, 1)
+ground_horizon_color = Color(0.509804, 0.654902, 0.737255, 1)
+
+[sub_resource type="Sky" id="Sky_buvxb"]
+sky_material = SubResource("ProceduralSkyMaterial_5m1s4")
+
+[sub_resource type="Environment" id="Environment_boo08"]
+background_mode = 2
+sky = SubResource("Sky_buvxb")
+
+[node name="Main" type="Node3D"]
+
+[node name="CameraPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0344315, 7.0313, 3.91534)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.507542, 0.356546, -0.784396, 0.330452, 0.760203, 0.559368, 0.795741, -0.543108, 0.268014, -10.4644, 13.294, 5.06856)
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -40, 0)
+mesh = SubResource("3")
+skin = SubResource("Skin_8kp6f")
+surface_material_override/0 = SubResource("StandardMaterial3D_lnens")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.714701, 0.384612, -0.584188, 0.043594, 0.809115, 0.586031, 0.69807, -0.444304, 0.561509, -5.09358, 9.47685, 2.47804)
+fov = 95.625
+far = 300.0
+script = ExtResource("1_70p5d")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+script = ExtResource("15")
+
+[node name="MFR" type="MeshInstance3D" parent="Area3D"]
+mesh = SubResource("1")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_tvuau")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("5")
+
+[node name="Area3D_rod" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 108.129, 0)
+script = ExtResource("4_yyb23")
+
+[node name="MFR" type="MeshInstance3D" parent="Area3D_rod"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -99.1683, 0)
+material_override = SubResource("StandardMaterial3D_dk6wc")
+mesh = SubResource("CylinderMesh_v7ih5")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_tvuau")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D_rod"]
+shape = SubResource("5")
+
+[node name="Neutrons" type="Node3D" parent="."]
+script = ExtResource("4_sky37")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("6_lb7ja")
+
+[node name="rod_HSlider" type="HSlider" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+min_value = -1.0
+max_value = 1.0
+step = 0.1
+script = ExtResource("7_y3lt1")
+
+[node name="minimal_VBoxContainer" type="VBoxContainer" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="nb_neutrons_label" type="Label" parent="Control/Panel/VBoxContainer/minimal_VBoxContainer"]
+layout_mode = 2
+text = "\"Number of neutrons \" + str(get_parent().nb_neutrons))"
+script = ExtResource("16")
+
+[node name="shutdown_button" type="Button" parent="Control/Panel/VBoxContainer/minimal_VBoxContainer"]
+layout_mode = 2
+text = "Close program"
+script = ExtResource("2")
+
+[node name="reflexions_button" type="Button" parent="Control/Panel/VBoxContainer/minimal_VBoxContainer"]
+layout_mode = 2
+text = "Activate Reflexions"
+script = ExtResource("5")
+
+[node name="pause_button" type="Button" parent="Control/Panel/VBoxContainer/minimal_VBoxContainer"]
+layout_mode = 2
+text = "Pause"
+script = ExtResource("6")
+
+[node name="reset_button" type="Button" parent="Control/Panel/VBoxContainer/minimal_VBoxContainer"]
+layout_mode = 2
+text = "Reset"
+script = ExtResource("20")
+
+[node name="sources" type="VBoxContainer" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="source_button" type="Button" parent="Control/Panel/VBoxContainer/sources"]
+layout_mode = 2
+text = "Generate Sources"
+script = ExtResource("12")
+
+[node name="nb_sources_label" type="Label" parent="Control/Panel/VBoxContainer/sources"]
+layout_mode = 2
+text = "Number of sources :"
+
+[node name="nb_source" type="LineEdit" parent="Control/Panel/VBoxContainer/sources"]
+layout_mode = 2
+focus_mode = 1
+text = "5"
+selecting_enabled = false
+
+[node name="Label" type="Label" parent="Control/Panel/VBoxContainer/sources"]
+layout_mode = 2
+text = "ponctual source : X, Y, Z"
+
+[node name="x_source" type="LineEdit" parent="Control/Panel/VBoxContainer/sources"]
+layout_mode = 2
+focus_mode = 1
+text = "0"
+
+[node name="y_source" type="LineEdit" parent="Control/Panel/VBoxContainer/sources"]
+layout_mode = 2
+focus_mode = 1
+text = "5"
+
+[node name="z_source" type="LineEdit" parent="Control/Panel/VBoxContainer/sources"]
+layout_mode = 2
+focus_mode = 1
+text = "0"
+
+[node name="geometry_VBoxContainer" type="VBoxContainer" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="x_label" type="Label" parent="Control/Panel/VBoxContainer/geometry_VBoxContainer"]
+layout_mode = 2
+text = "MFR x slider :"
+
+[node name="x_HSlider" type="HSlider" parent="Control/Panel/VBoxContainer/geometry_VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+min_value = 0.1
+max_value = 5.0
+step = 0.1
+value = 1.0
+script = ExtResource("11")
+
+[node name="y_label" type="Label" parent="Control/Panel/VBoxContainer/geometry_VBoxContainer"]
+layout_mode = 2
+text = "MFR y slider :"
+
+[node name="y_HSlider" type="HSlider" parent="Control/Panel/VBoxContainer/geometry_VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+min_value = 0.1
+max_value = 5.0
+step = 0.1
+value = 1.0
+script = ExtResource("8")
+
+[node name="z_label" type="Label" parent="Control/Panel/VBoxContainer/geometry_VBoxContainer"]
+layout_mode = 2
+text = "MFR z slider :"
+
+[node name="z_HSlider" type="HSlider" parent="Control/Panel/VBoxContainer/geometry_VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+min_value = 0.1
+max_value = 5.0
+step = 0.1
+value = 1.0
+script = ExtResource("9")
+
+[node name="b2m_label" type="Label" parent="Control/Panel/VBoxContainer/geometry_VBoxContainer"]
+layout_mode = 2
+text = "B2m = "
+script = ExtResource("13")
+
+[node name="b2g_label" type="Label" parent="Control/Panel/VBoxContainer/geometry_VBoxContainer"]
+layout_mode = 2
+text = "MFR x slider :"
+script = ExtResource("7")
+
+[node name="chemistry_VBoxContainer" type="VBoxContainer" parent="Control/Panel/VBoxContainer/geometry_VBoxContainer"]
+layout_mode = 2
+
+[node name="s_label" type="Label" parent="Control/Panel/VBoxContainer/geometry_VBoxContainer/chemistry_VBoxContainer"]
+layout_mode = 2
+text = "Scattering (barn) :"
+
+[node name="s_HSlider" type="HSlider" parent="Control/Panel/VBoxContainer/geometry_VBoxContainer/chemistry_VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+max_value = 250.0
+step = 10.0
+value = 150.0
+script = ExtResource("16_e28kx")
+
+[node name="c_label" type="Label" parent="Control/Panel/VBoxContainer/geometry_VBoxContainer/chemistry_VBoxContainer"]
+layout_mode = 2
+text = "Capture (barn) :"
+
+[node name="c_HSlider" type="HSlider" parent="Control/Panel/VBoxContainer/geometry_VBoxContainer/chemistry_VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+step = 5.0
+value = 50.0
+script = ExtResource("17_kuen0")
+
+[node name="f_label" type="Label" parent="Control/Panel/VBoxContainer/geometry_VBoxContainer/chemistry_VBoxContainer"]
+layout_mode = 2
+text = "Fission (barn)"
+
+[node name="f_HSlider" type="HSlider" parent="Control/Panel/VBoxContainer/geometry_VBoxContainer/chemistry_VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+max_value = 250.0
+step = 5.0
+value = 185.0
+script = ExtResource("18_qe3k4")
+
+[node name="GUI_VBoxContainer" type="VBoxContainer" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Tree_title" type="Label" parent="Control/Panel/VBoxContainer/GUI_VBoxContainer"]
+layout_mode = 2
+text = "Scenarios :"
+
+[node name="Tree" type="Tree" parent="Control/Panel/VBoxContainer/GUI_VBoxContainer"]
+custom_minimum_size = Vector2(10, 100)
+layout_mode = 2
+script = ExtResource("3")
+
+[node name="load_scenario_button" type="Button" parent="Control/Panel/VBoxContainer/GUI_VBoxContainer"]
+layout_mode = 2
+text = "load scenario"
+script = ExtResource("4")
+
+[node name="Label" type="Label" parent="Control/Panel/VBoxContainer/GUI_VBoxContainer"]
+layout_mode = 2
+text = "Speed value : "
+
+[node name="speed_HSlider" type="HSlider" parent="Control/Panel/VBoxContainer/GUI_VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+min_value = 0.5
+max_value = 20.0
+step = 0.1
+value = 5.0
+script = ExtResource("10")
+
+[node name="moving_volume_check_button" type="CheckButton" parent="Control/Panel/VBoxContainer/GUI_VBoxContainer"]
+layout_mode = 2
+text = "Allow moving volumes"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_boo08")
+
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_Area_body_entered"]
+[connection signal="body_exited" from="Area3D" to="Area3D" method="_on_Area_body_exited"]
+[connection signal="mouse_entered" from="Area3D" to="Area3D" method="_on_Area_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="Area3D" method="_on_Area_mouse_exited"]
+[connection signal="body_entered" from="Area3D_rod" to="Area3D_rod" method="_on_Area_body_entered"]
+[connection signal="body_exited" from="Area3D_rod" to="Area3D_rod" method="_on_Area_body_exited"]
+[connection signal="mouse_entered" from="Area3D_rod" to="Area3D_rod" method="_on_Area_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D_rod" to="Area3D_rod" method="_on_Area_mouse_exited"]
